@@ -20,9 +20,14 @@ namespace CalendarCrawl
 
     class Scheduler
     {
-        public Scheduler(AbsenceObject[] CalObjs)
+        public Scheduler(List<AbsenceObject> absenceList)
         {
-            Console.WriteLine("changing the schedule based on absense objects");
+            Console.WriteLine("changing the schedule based on absence objects");
+            foreach (AbsenceObject absence in absenceList)
+            {
+                  
+            }
+
         }
     }
 }

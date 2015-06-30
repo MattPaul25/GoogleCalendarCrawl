@@ -19,6 +19,7 @@ namespace CalendarQuickstart
         static void Main()
         {
             var calInfo = new CalendarConnect();
+            var scedj = new Scheduler(calInfo.absenseList);
             Console.ReadLine();
         }
     }
@@ -26,6 +27,8 @@ namespace CalendarQuickstart
     {
         private string[] Scopes = { CalendarService.Scope.CalendarReadonly };
         private string ApplicationName = "Google Calendar API Quickstart";
+        public List<AbsenceObject> absenseList { get; set; }
+
         public CalendarConnect()
         {
             getCalendarInfo();
@@ -58,6 +61,7 @@ namespace CalendarQuickstart
             Console.WriteLine("Upcoming events:");
             if (events.Items != null && events.Items.Count > 0)
             {
+                absenseList = new List<AbsenceObject>();
                 foreach (var eventItem in events.Items)
                 {
                     List<string> attendees = new List<string>();
@@ -65,7 +69,7 @@ namespace CalendarQuickstart
                     {
                         attendees.Add(eventItem.Attendees[i].DisplayName);
                     }
-                    var absObj = new AbsenceObject()
+                    var absenceObj = new AbsenceObject()
                     {
                         EventInvites = attendees,
                         EventCreator = eventItem.Creator.DisplayName,
@@ -73,7 +77,9 @@ namespace CalendarQuickstart
                         EventEndTime = System.Convert.ToDateTime(eventItem.End.DateTime.Value.ToLongTimeString())
 
                     };
+                    absenseList.Add(absenceObj);
                 }
+               
             }
             else
             {
